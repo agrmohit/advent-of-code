@@ -1,3 +1,4 @@
+// Package math contains commonly used mathematical functions
 package math
 
 // Abs takes an int and returns the absolute value

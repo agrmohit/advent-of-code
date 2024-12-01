@@ -1,3 +1,4 @@
+// Package inputs contains functions used to parse input data
 package inputs
 
 import (
