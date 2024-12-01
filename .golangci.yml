@@ -1,0 +1,19 @@
+# Refer to golangci-lint's example config file for more options and information:
+# https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
+# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+
+run:
+  modules-download-mode: readonly
+
+linters:
+  enable:
+    - dupl
+    - errcheck
+    - goconst
+    - gocyclo
+    - gosimple
+    - goimports
+    - govet
+    - misspell
+    - revive
+    - staticcheck
