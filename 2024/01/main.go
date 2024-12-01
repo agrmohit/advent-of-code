@@ -30,8 +30,30 @@ func solvePart1(input string) int {
 	return totalDistance
 }
 
+func solvePart2(input string) int {
+	left, right, err := inputs.ExtractIntPairs(input)
+	if err != nil {
+		panic(err)
+	}
+
+	rightCount := make(map[int]int)
+	similarityScore := 0
+
+	for _, rnum := range right {
+		rightCount[rnum]++
+	}
+
+	for _, lnum := range left {
+		similarityScore += lnum * rightCount[lnum]
+	}
+
+	return similarityScore
+}
+
 func main() {
 	part1Solution := solvePart1(input)
+	part2Solution := solvePart2(input)
 
 	fmt.Println("Day 01 Part 1 solution:", part1Solution)
+	fmt.Println("Day 01 Part 2 solution:", part2Solution)
 }
