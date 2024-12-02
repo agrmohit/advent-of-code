@@ -46,6 +46,8 @@ func ExtractIntPairs(input string) ([]int, []int, error) {
 	return left, right, nil
 }
 
+// ExtractIntRows takes multiple lines of whitespace separated numbers and
+// parses it into a 2d int slice
 func ExtractIntRows(input string) ([][]int, error) {
 	var result [][]int
 
