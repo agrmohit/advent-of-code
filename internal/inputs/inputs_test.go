@@ -1,6 +1,7 @@
 package inputs
 
 import (
+	"reflect"
 	"slices"
 	"testing"
 )
@@ -50,6 +51,37 @@ func TestExtractIntPairs(t *testing.T) {
 
 		if !slices.Equal(leftGot, leftWant) || !slices.Equal(rightGot, rightWant) {
 			t.Errorf("Expected %v, %v, got %v, %v", leftWant, leftGot, rightWant, rightGot)
+		}
+	})
+}
+
+func TestExtractIntRows(t *testing.T) {
+	t.Run("empty input", func(t *testing.T) {
+		input := ``
+		_, err := ExtractIntRows(input)
+
+		if err == nil {
+			t.Errorf("expected an error, didnt get one")
+		}
+	})
+
+	t.Run("invalid line", func(t *testing.T) {
+		input := `123 abc`
+		_, err := ExtractIntRows(input)
+
+		if err == nil {
+			t.Errorf("expected an error, didnt get one")
+		}
+	})
+
+	t.Run("numbers separated by tabs", func(t *testing.T) {
+		input := "1 2\t3\n4\t5 6"
+		want := [][]int{{1, 2, 3}, {4, 5, 6}}
+
+		got, _ := ExtractIntRows(input)
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %v, want %v", got, want)
 		}
 	})
 }
