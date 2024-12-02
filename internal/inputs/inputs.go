@@ -41,11 +41,5 @@ func ExtractIntPairs(input string) ([]int, []int, error) {
 		right = append(right, rightNum)
 	}
 
-	// Check whether the number of elements in left and right slices are the same
-	// This check is probably not needed
-	if len(left) != len(right) {
-		return nil, nil, fmt.Errorf("Length of left and right slices differ: %d, %d", len(left), len(right))
-	}
-
 	return left, right, nil
 }
