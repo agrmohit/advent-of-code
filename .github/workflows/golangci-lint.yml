@@ -22,3 +22,4 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.60
+          skip-cache: true # go.sum is not created because of no external dependencies
