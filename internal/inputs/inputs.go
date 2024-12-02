@@ -20,7 +20,9 @@ func ExtractIntPairs(input string) ([]int, []int, error) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 
 	for _, line := range lines {
+		// Split each line into columns separated by whitespace
 		columns := strings.Fields(line)
+
 		if len(columns) != 2 {
 			return nil, nil, fmt.Errorf("Invalid line input: %s", line)
 		}
@@ -42,4 +44,40 @@ func ExtractIntPairs(input string) ([]int, []int, error) {
 	}
 
 	return left, right, nil
+}
+
+func ExtractIntRows(input string) ([][]int, error) {
+	var result [][]int
+
+	// Check whether input is empty
+	if len(input) == 0 {
+		return nil, fmt.Errorf("Input is empty")
+	}
+
+	// Split input into separate lines
+	lines := strings.Split(strings.TrimSpace(input), "\n")
+
+	for _, line := range lines {
+		// Split each line into columns separated by whitespace
+		columns := strings.Fields(line)
+
+		// Create an int slice with length equal to number of columns
+		row := make([]int, len(columns))
+
+		// Convert the strings to int and store in `row` slice
+		for i, column := range columns {
+			// Parse each column as numbers
+			num, err := strconv.Atoi(column)
+			if err != nil {
+				return nil, fmt.Errorf("invalid number %q in row %q", column, row)
+			}
+
+			row[i] = num
+		}
+
+		// Append the int row to result
+		result = append(result, row)
+	}
+
+	return result, nil
 }
