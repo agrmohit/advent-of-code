@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/agrmohit/advent-of-code/internal/inputs"
-	mathinternal "github.com/agrmohit/advent-of-code/internal/math"
+	"github.com/agrmohit/aoc/internal/inputs"
+	mathinternal "github.com/agrmohit/aoc/internal/math"
 )
 
 //go:embed input.txt
