@@ -18,8 +18,9 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
+          cache: false
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.60
-          skip-cache: true # go.sum is not created because of no external dependencies
+          skip-cache: true
