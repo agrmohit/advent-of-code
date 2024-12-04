@@ -83,3 +83,26 @@ func ExtractIntRows(input string) ([][]int, error) {
 
 	return result, nil
 }
+
+func ExtractCharacterGrid(input string) ([][]byte, error) {
+	var result [][]byte
+
+	// Check whether input is empty
+	if len(input) == 0 {
+		return nil, fmt.Errorf("Input is empty")
+	}
+
+	// Split input into separate lines
+	lines := strings.Split(strings.TrimSpace(input), "\n")
+
+	expectedLineLength := len(lines[0])
+	for _, line := range lines {
+		if len(line) != expectedLineLength {
+			return nil, fmt.Errorf("Grid doesn't have consistent line lengths")
+		}
+
+		result = append(result, []byte(line))
+	}
+
+	return result, nil
+}
