@@ -7,7 +7,7 @@ import (
 	"slices"
 
 	"github.com/agrmohit/aoc/internal/inputs"
-	mathinternal "github.com/agrmohit/aoc/internal/math"
+	"github.com/agrmohit/aoc/internal/mathutils"
 )
 
 //go:embed input.txt
@@ -25,7 +25,7 @@ func solvePart1(input string) int {
 	totalDistance := 0
 
 	for i := range left {
-		totalDistance += mathinternal.Abs(left[i] - right[i])
+		totalDistance += mathutils.Abs(left[i] - right[i])
 	}
 
 	return totalDistance

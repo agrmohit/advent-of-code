@@ -6,7 +6,7 @@ import (
 	"slices"
 
 	"github.com/agrmohit/aoc/internal/inputs"
-	mathinternal "github.com/agrmohit/aoc/internal/math"
+	"github.com/agrmohit/aoc/internal/mathutils"
 )
 
 //go:embed input.txt
@@ -28,7 +28,7 @@ func checkIsSafe(row []int) bool {
 		}
 
 		// If absolute difference between consecutive numbers is not 1, 2 or 3
-		if mathinternal.Abs(row[i]-row[i-1]) > 3 {
+		if mathutils.Abs(row[i]-row[i-1]) > 3 {
 			return false
 		}
 	}

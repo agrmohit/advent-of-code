@@ -1,5 +1,5 @@
-// Package math contains commonly used mathematical functions
-package math
+// Package mathutils contains commonly used mathematical functions
+package mathutils
 
 // Abs takes an int and returns the absolute value
 func Abs(num int) int {
