@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-//go:embed test1.txt
+//go:embed input.txt
 var input string
 
 // parseInput takes string input and returns two 2d int slicees.
@@ -83,7 +83,8 @@ func getPageMap(pageNumbers []int) map[int]int {
 	return pageMap
 }
 
-func checkOrder(pagePairs [][2]int, pageMap map[int]int, inOrder bool) (bool, [2]int) {
+func checkOrder(pagePairs [][2]int, pageMap map[int]int) (bool, [2]int) {
+	inOrder := true
 	for _, pagePair := range pagePairs {
 		page1Index, ok1 := pageMap[pagePair[0]]
 		page2Index, ok2 := pageMap[pagePair[1]]
@@ -113,10 +114,9 @@ func solvePart1(input string) int {
 	sumOfMiddlePageNumbers := 0
 
 	for _, pageNumbers := range pageNumbersList {
-		inOrder := true
 		pageMap := getPageMap(pageNumbers)
 
-		inOrder, _ = checkOrder(pagePairs, pageMap, inOrder)
+		inOrder, _ := checkOrder(pagePairs, pageMap)
 
 		if inOrder {
 			sumOfMiddlePageNumbers += pageNumbers[len(pageNumbers)/2]
@@ -126,8 +126,60 @@ func solvePart1(input string) int {
 	return sumOfMiddlePageNumbers
 }
 
+func swap(arr []int, a, b int) []int {
+	arr[a] = arr[a] + arr[b]
+	arr[b] = arr[a] - arr[b]
+	arr[a] = arr[a] - arr[b]
+
+	return arr
+}
+
+func fixOrder(pagePairs [][2]int, pageNumbers []int) []int {
+	for i := 0; i < len(pagePairs); i++ {
+		pageMap := getPageMap(pageNumbers)
+		inOrder, pagePairsNotInOrder := checkOrder(pagePairs, pageMap)
+
+		if !inOrder {
+			a := pageMap[pagePairsNotInOrder[0]]
+			b := pageMap[pagePairsNotInOrder[1]]
+			pageNumbers = swap(pageNumbers, a, b)
+		} else {
+			return pageNumbers
+		}
+	}
+
+	return []int{}
+}
+
+func solvePart2(input string) int {
+	pagePairs, pageNumbersList, err := parseInput(input)
+	if err != nil {
+		log.Fatalf("ERROR: %v", err)
+	}
+
+	sumOfMiddlePageNumbers := 0
+
+	for _, pageNumbers := range pageNumbersList {
+		pageMap := getPageMap(pageNumbers)
+
+		inOrder, _ := checkOrder(pagePairs, pageMap)
+
+		if !inOrder {
+			fixedPageNumbers := fixOrder(pagePairs, pageNumbers)
+			if len(fixedPageNumbers) == 0 {
+				log.Fatalf("ERROR: %v", fmt.Errorf("Unable to fix page numbers"))
+			}
+			sumOfMiddlePageNumbers += fixedPageNumbers[len(fixedPageNumbers)/2]
+		}
+	}
+
+	return sumOfMiddlePageNumbers
+}
+
 func main() {
 	part1Solution := solvePart1(input)
+	part2Solution := solvePart2(input)
 
 	fmt.Println("Day 05 Part 1 solution:", part1Solution)
+	fmt.Println("Day 05 Part 2 solution:", part2Solution)
 }
