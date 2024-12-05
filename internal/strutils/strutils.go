@@ -1,3 +1,4 @@
+// Package strutils contains commonly used string functions
 package strutils
 
 // Reverse takes a string and returns the reversed string
