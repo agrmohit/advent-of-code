@@ -73,6 +73,7 @@ func parseInput(input string) ([][2]int, [][]int, error) {
 	return pagePairs, pageNumbersList, nil
 }
 
+// getPageMap generates a map with page number as key and its index as value
 func getPageMap(pageNumbers []int) map[int]int {
 	pageMap := map[int]int{}
 
@@ -83,8 +84,14 @@ func getPageMap(pageNumbers []int) map[int]int {
 	return pageMap
 }
 
+// checkOrder checks whether the given page numbers are in order following given rules
+//
+// If they are in order, it returns boolean true and and empty int slice.
+// If they are not in order, it returns boolean false along with an int slice
+// containing the page numbers that violate rules.
 func checkOrder(pagePairs [][2]int, pageMap map[int]int) (bool, [2]int) {
 	inOrder := true
+
 	for _, pagePair := range pagePairs {
 		page1Index, ok1 := pageMap[pagePair[0]]
 		page2Index, ok2 := pageMap[pagePair[1]]
@@ -126,6 +133,7 @@ func solvePart1(input string) int {
 	return sumOfMiddlePageNumbers
 }
 
+// swap does in-place arithmetic swap on given slice for given indices and returns new slice
 func swap(arr []int, a, b int) []int {
 	arr[a] = arr[a] + arr[b]
 	arr[b] = arr[a] - arr[b]
@@ -134,18 +142,25 @@ func swap(arr []int, a, b int) []int {
 	return arr
 }
 
+// fixOrder fixes the order of given page numbers following provided rules.
+//
+// It is essentially a sorting algorithms with custom rules. It takes sorting
+// rules as a 2d slice in pagePairs and list of page numbers as a slice in
+// pagePairs and returns the sorted/fixed order page numbers.
 func fixOrder(pagePairs [][2]int, pageNumbers []int) []int {
 	for i := 0; i < len(pagePairs); i++ {
 		pageMap := getPageMap(pageNumbers)
 		inOrder, pagePairsNotInOrder := checkOrder(pagePairs, pageMap)
 
-		if !inOrder {
-			a := pageMap[pagePairsNotInOrder[0]]
-			b := pageMap[pagePairsNotInOrder[1]]
-			pageNumbers = swap(pageNumbers, a, b)
-		} else {
+		// Return page numbers when they are in order
+		if inOrder {
 			return pageNumbers
 		}
+
+		// If page numbers are not in order, swap the offending pair of pages
+		a := pageMap[pagePairsNotInOrder[0]]
+		b := pageMap[pagePairsNotInOrder[1]]
+		pageNumbers = swap(pageNumbers, a, b)
 	}
 
 	return []int{}
