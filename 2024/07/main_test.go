@@ -17,4 +17,13 @@ func TestSolution(t *testing.T) {
 			t.Errorf("Incorrect solution, got %d want %d", got, want)
 		}
 	})
+
+	t.Run("Day 07 part 2 test 1", func(t *testing.T) {
+		want := 11387
+		got := solvePart2(test1)
+
+		if got != want {
+			t.Errorf("Incorrect solution, got %d want %d", got, want)
+		}
+	})
 }
